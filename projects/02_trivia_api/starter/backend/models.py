@@ -1,17 +1,19 @@
 import os
 from sqlalchemy import Column, String, Integer, create_engine
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 import json
 
-database_name = "trivia"
-database_path = "postgres://{}/{}".format('localhost:5432', database_name)
-
+# database_name = "trivia"
+# database_path = "postgres://{}/{}".format('localhost:5432', database_name)
+database_path='postgresql://postgres:2271996@localhost:5432/trivia'
 db = SQLAlchemy()
 
-'''
-setup_db(app)
-    binds a flask application and a SQLAlchemy service
-'''
+def db_setup(app):
+    db.app = app
+    db.init_app(app)
+    migrate = Migrate(app, db)
+
 def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -71,6 +73,13 @@ class Category(db.Model):
   def __init__(self, type):
     self.type = type
 
+  def insert(self):
+    db.session.add(self)
+    db.session.commit()
+
+  def delete(self):
+    db.session.delete(self)
+    db.session.commit()
   def format(self):
     return {
       'id': self.id,
