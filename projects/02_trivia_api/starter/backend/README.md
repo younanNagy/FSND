@@ -219,8 +219,8 @@ Example response:
 ## Testing
 To run the tests, run
 ```
-dropdb trivia_test
-createdb trivia_test
-psql trivia_test < trivia.psql
+dropdb trivia
+createdb trivia
+psql trivia < trivia.psql
 python test_flaskr.py
 ```
