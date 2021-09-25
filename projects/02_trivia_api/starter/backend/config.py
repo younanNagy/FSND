@@ -10,5 +10,9 @@ DEBUG = True
 
 
 # TODO IMPLEMENT DATABASE URL
-SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:2271996@localhost:5432/trivia'
+data_base_user_name=os.environ['UserName']
+data_base_user_password=os.environ['Password']
+data_base_url=os.environ['URL']
+data_base_name=os.environ['DataBaseName']
+SQLALCHEMY_DATABASE_URI="postgresql://{}:{}@{}/{}".format(data_base_user_name,data_base_user_password,data_base_url,data_base_name)
 SQLALCHEMY_TRACK_MODIFICATIONS=False

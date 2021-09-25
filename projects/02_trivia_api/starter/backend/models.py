@@ -1,18 +1,18 @@
 import os
 from sqlalchemy import Column, String, Integer, create_engine
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 import json
 
-# database_name = "trivia"
-# database_path = "postgres://{}/{}".format('localhost:5432', database_name)
-database_path='postgresql://postgres:2271996@localhost:5432/trivia'
+data_base_user_name=os.environ['UserName']
+data_base_user_password=os.environ['Password']
+data_base_url=os.environ['URL']
+data_base_name=os.environ['DataBaseName']
+database_path="postgresql://{}:{}@{}/{}".format(data_base_user_name,data_base_user_password,data_base_url,data_base_name)
 db = SQLAlchemy()
 
 def db_setup(app):
     db.app = app
     db.init_app(app)
-    migrate = Migrate(app, db)
 
 def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path

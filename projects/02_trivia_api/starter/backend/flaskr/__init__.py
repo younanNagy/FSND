@@ -118,6 +118,7 @@ def create_app(test_config=None):
       abort(404)
     question.delete()
     return jsonify({
+      'deleted':question_id,
       'success': True
     })
   '''
